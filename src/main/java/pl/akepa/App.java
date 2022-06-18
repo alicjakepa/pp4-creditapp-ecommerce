@@ -7,6 +7,8 @@ import pl.akepa.creditcard.NameProvider;
 import pl.akepa.productcatalog.MapProductStorage;
 import pl.akepa.productcatalog.ProductCatalog;
 import pl.akepa.productcatalog.ProductStorage;
+import pl.akepa.sales.CartStorage;
+import pl.akepa.sales.ProductDetailsProvider;
 import pl.akepa.sales.Sales;
 
 import java.math.BigDecimal;
@@ -46,7 +48,7 @@ public class App {
 
     @Bean
     Sales createSales() {
-        return new Sales();
+        return new Sales(new CartStorage(), new ProductDetailsProvider());
     }
 
 }
