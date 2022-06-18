@@ -7,6 +7,7 @@ import pl.akepa.creditcard.NameProvider;
 import pl.akepa.productcatalog.MapProductStorage;
 import pl.akepa.productcatalog.ProductCatalog;
 import pl.akepa.productcatalog.ProductStorage;
+import pl.akepa.sales.Sales;
 
 import java.math.BigDecimal;
 
@@ -42,4 +43,10 @@ public class App {
 
         return productCatalog;
     }
+
+    @Bean
+    Sales createSales() {
+        return new Sales();
+    }
+
 }
