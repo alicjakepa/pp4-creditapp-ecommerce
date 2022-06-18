@@ -1,4 +1,7 @@
-package pl.akepa.sales;
+package pl.akepa.sales.reservation;
+
+import pl.akepa.sales.*;
+import pl.akepa.sales.payment.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -28,7 +31,7 @@ public class Reservation {
         );
     }
 
-    public PaymentData registerPayment(DummyPaymentGateway paymentGateway) {
+    public PaymentData registerPayment(PaymentGateway paymentGateway) {
 
         RegisterPaymentResponse response = paymentGateway
                 .handle(RegisterPaymentRequest.builder()

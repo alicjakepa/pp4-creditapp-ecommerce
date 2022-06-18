@@ -1,4 +1,4 @@
-package pl.akepa.sales;
+package pl.akepa.sales.payment;
 
 import lombok.Builder;
 import lombok.Data;
@@ -13,4 +13,8 @@ public class RegisterPaymentRequest {
     String firstname;
     String lastname;
     String email;
+
+    public int totalAsInt() {
+        return total.multiply(BigDecimal.valueOf(100)).intValue();
+    }
 }

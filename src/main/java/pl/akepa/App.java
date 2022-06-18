@@ -4,11 +4,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.akepa.creditcard.NameProvider;
+import pl.akepa.payu.PayU;
 import pl.akepa.productcatalog.MapProductStorage;
 import pl.akepa.productcatalog.ProductCatalog;
 import pl.akepa.productcatalog.ProductData;
 import pl.akepa.productcatalog.ProductStorage;
 import pl.akepa.sales.*;
+import pl.akepa.sales.cart.CartStorage;
+import pl.akepa.sales.payment.PayUPaymentGateway;
+import pl.akepa.sales.payment.PaymentGateway;
+import pl.akepa.sales.products.ProductDetails;
+import pl.akepa.sales.products.ProductDetailsProvider;
+import pl.akepa.sales.reservation.ReservationStorage;
 
 import java.math.BigDecimal;
 
@@ -46,11 +53,18 @@ public class App {
     }
 
     @Bean
-    Sales createSales(ProductDetailsProvider productDetailsProvider) {
+    PaymentGateway createPaymentGateway() {
+        return new PayUPaymentGateway(
+                new PayU(System.getenv("PAYU_MERCHANT_POS_ID")));
+
+    }
+
+    @Bean
+    Sales createSales(ProductDetailsProvider productDetailsProvider, PaymentGateway paymentGateway) {
         return new Sales(
                 new CartStorage(),
                 productDetailsProvider,
-                new DummyPaymentGateway(),
+                paymentGateway,
                 new ReservationStorage()
         );
     }

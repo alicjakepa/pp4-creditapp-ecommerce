@@ -1,7 +1,6 @@
-package pl.akepa.sales;
+package pl.akepa.sales.cart;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Cart {
     Map<String, CartItem> items;

@@ -1,4 +1,4 @@
-package pl.akepa.sales;
+package pl.akepa.sales.reservation;
 
 import java.util.HashMap;
 import java.util.Map;

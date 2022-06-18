@@ -1,4 +1,7 @@
-package pl.akepa.sales;
+package pl.akepa.sales.offer;
+
+import pl.akepa.sales.cart.Cart;
+import pl.akepa.sales.cart.CartItem;
 
 import java.math.BigDecimal;
 
@@ -11,7 +14,7 @@ public class OfferMaker {
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO);
 
-        return Offer.of(total, cart.items.size());
+        return Offer.of(total, cart.getItems().size());
     }
 
     private BigDecimal calculateLineTotal(CartItem cartItem) {

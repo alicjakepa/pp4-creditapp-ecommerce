@@ -1,4 +1,4 @@
-package pl.akepa.sales;
+package pl.akepa.sales.offer;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

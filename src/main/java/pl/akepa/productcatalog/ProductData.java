@@ -13,6 +13,8 @@ public class ProductData {
     private String image;
     private boolean online;
 
+    public ProductData() {}
+
     public ProductData(String productId, String name) {
         this.id = productId;
         this.name = name;

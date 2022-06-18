@@ -1,4 +1,4 @@
-package pl.akepa.sales;
+package pl.akepa.sales.payment;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -2,6 +2,15 @@ package pl.akepa.sales;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.akepa.sales.cart.CartStorage;
+import pl.akepa.sales.offer.Offer;
+import pl.akepa.sales.offer.OfferNotMatchedException;
+import pl.akepa.sales.payment.DummyPaymentGateway;
+import pl.akepa.sales.payment.PaymentData;
+import pl.akepa.sales.products.ListProductDetailsProvider;
+import pl.akepa.sales.products.ProductDetails;
+import pl.akepa.sales.reservation.Reservation;
+import pl.akepa.sales.reservation.ReservationStorage;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -31,7 +40,7 @@ public class OrderingTest {
         Offer seenOffer = sales.getCurrentOffer(customerId);
 
         //when //act
-        PaymentData payment = sales.acceptOffer(customerId, seenOffer, exampleCustomerData());
+        PaymentData payment = sales.acceptOffer(customerId, exampleCustomerData());
 
         //then // assert
         String reservationId = payment.getReservationId();
@@ -60,7 +69,6 @@ public class OrderingTest {
         assertThrows(OfferNotMatchedException.class, () -> {
             sales.acceptOffer(
                     customerId,
-                    newOffer,
                     exampleCustomerData());
         });
     }

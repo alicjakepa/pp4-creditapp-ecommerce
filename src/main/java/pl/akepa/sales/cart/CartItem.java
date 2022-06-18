@@ -1,4 +1,4 @@
-package pl.akepa.sales;
+package pl.akepa.sales.cart;
 
 import java.math.BigDecimal;
 

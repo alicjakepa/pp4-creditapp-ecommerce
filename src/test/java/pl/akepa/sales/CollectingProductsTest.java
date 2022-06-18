@@ -2,6 +2,12 @@ package pl.akepa.sales;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.akepa.sales.cart.CartStorage;
+import pl.akepa.sales.offer.Offer;
+import pl.akepa.sales.payment.DummyPaymentGateway;
+import pl.akepa.sales.products.ListProductDetailsProvider;
+import pl.akepa.sales.products.ProductDetails;
+import pl.akepa.sales.reservation.ReservationStorage;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
