@@ -44,4 +44,8 @@ public class Sales {
 
         cartStorage.save(customerId, cart);
     }
+
+    public PaymentData acceptOffer(String customerId, Offer seenOffer, ClientData clientData) {
+        return null;
+    }
 }
