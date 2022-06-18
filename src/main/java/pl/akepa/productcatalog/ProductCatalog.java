@@ -1,17 +1,13 @@
 package pl.akepa.productcatalog;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ProductCatalog {
     ProductStorage productStorage;
     /// Domain / Business
-    public ProductCatalog() {
-        this.productStorage = new ProductStorage();
+    public ProductCatalog(ProductStorage productStorage) {
+        this.productStorage = productStorage;
     }
 
     public String addProduct(String productId, String name) {

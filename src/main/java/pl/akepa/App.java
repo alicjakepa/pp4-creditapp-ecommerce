@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.akepa.creditcard.NameProvider;
+import pl.akepa.productcatalog.MapProductStorage;
 import pl.akepa.productcatalog.ProductCatalog;
 
 import java.math.BigDecimal;
@@ -22,7 +23,7 @@ public class App {
 
     @Bean
     ProductCatalog createMyProductCatalog() {
-        ProductCatalog productCatalog = new ProductCatalog();
+        ProductCatalog productCatalog = new ProductCatalog(new MapProductStorage());
         String productId1 = productCatalog.addProduct("lego-set-1", "Nice Lego set");
         productCatalog.assignImage(productId1, "https://picsum.photos/id/237/200/300");
         productCatalog.assignPrice(productId1, BigDecimal.TEN);
