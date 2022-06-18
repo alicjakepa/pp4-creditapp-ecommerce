@@ -1,10 +1,14 @@
 package pl.akepa.productcatalog;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 
+@Entity
 public class ProductData {
-    private final String id;
-    private final String name;
+    @Id
+    private String id;
+    private String name;
     private BigDecimal newPrice;
     private String image;
     private boolean online;
