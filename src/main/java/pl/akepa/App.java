@@ -6,12 +6,12 @@ import org.springframework.context.annotation.Bean;
 import pl.akepa.creditcard.NameProvider;
 import pl.akepa.productcatalog.MapProductStorage;
 import pl.akepa.productcatalog.ProductCatalog;
+import pl.akepa.productcatalog.ProductData;
 import pl.akepa.productcatalog.ProductStorage;
-import pl.akepa.sales.CartStorage;
-import pl.akepa.sales.ProductDetailsProvider;
-import pl.akepa.sales.Sales;
+import pl.akepa.sales.*;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 
 @SpringBootApplication
 public class App {
@@ -47,8 +47,22 @@ public class App {
     }
 
     @Bean
-    Sales createSales() {
-        return new Sales(new CartStorage(), new ProductDetailsProvider());
+    Sales createSales(ProductDetailsProvider productDetailsProvider) {
+        return new Sales(
+                new CartStorage(),
+                productDetailsProvider
+        );
+    }
+
+    @Bean
+    ProductDetailsProvider detailsProvider(ProductCatalog catalog) {
+        return (productId -> {
+            ProductData data = catalog.getDetails(productId);
+            return java.util.Optional.of(new ProductDetails(
+                    data.getId(),
+                    data.getName(),
+                    data.getPrice()));
+        });
     }
 
 }

@@ -1,10 +1,11 @@
 package pl.akepa.sales;
 
-import org.assertj.core.util.BigDecimalComparator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,10 +13,23 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CollectingProductsTest {
 
     CartStorage cartStorage;
+    List<ProductDetails> productDetails;
 
     @BeforeEach
     void setup() {
         cartStorage = new CartStorage();
+        productDetails = new ArrayList<>();
+    }
+
+    @Test
+    void newOfferIsEmpty() {
+        String customerId = thereIsCustomer();
+        Sales sales = thereIsSalesModule();
+
+        Offer offer  = sales.getCurrentOffer(customerId);
+
+        assertEquals(BigDecimal.ZERO, offer.getTotal());
+        assertEquals(0, offer.getItemsCount());
     }
 
     @Test
@@ -30,6 +44,18 @@ public class CollectingProductsTest {
     }
 
     @Test
+    void allowsToAddSameProductTwice() {
+        String productId = thereIsProduct("lego", BigDecimal.TEN);
+        String customerId = thereIsCustomer();
+        Sales sales = thereIsSalesModule();
+
+        sales.addToCart(customerId, productId);
+        sales.addToCart(customerId, productId);
+
+        thereIsXProductsInCustomersCart(customerId, 1);
+    }
+
+    @Test
     void allowsToAddProductAndRetrieveAnOffer() {
         String productId = thereIsProduct("lego", BigDecimal.TEN);
         String customerId = thereIsCustomer();
@@ -38,7 +64,8 @@ public class CollectingProductsTest {
         sales.addToCart(customerId, productId);
         Offer offer  = sales.getCurrentOffer(customerId);
 
-        assertEquals(BigDecimal.TEN, offer);
+        assertEquals(BigDecimal.TEN, offer.getTotal());
+        assertEquals(1, offer.getItemsCount());
     }
 
     @Test
@@ -80,10 +107,16 @@ public class CollectingProductsTest {
     }
 
     private Sales thereIsSalesModule() {
-        return new Sales(cartStorage, new ProductDetailsProvider());
+        return new Sales(
+                cartStorage,
+                new ListProductDetailsProvider(productDetails)
+        );
     }
 
     private String thereIsProduct(String id, BigDecimal price) {
+        productDetails.add(
+                new ProductDetails(id, id, price)
+        );
         return id;
     }
 

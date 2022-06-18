@@ -1,5 +1,7 @@
 package pl.akepa.sales;
 
+import java.math.BigDecimal;
+
 public class Sales {
 
     CartStorage cartStorage;
@@ -11,7 +13,21 @@ public class Sales {
     }
 
     public Offer getCurrentOffer(String customerId) {
-        return Offer.emptyOffer();
+        Cart cart = cartStorage.getForCustomer(customerId)
+                .orElse(Cart.empty());
+
+        BigDecimal total = cart
+                .getItems()
+                .stream()
+                .map(this::calculateLineTotal)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
+
+        return Offer.of(total, cart.items.size());
+    }
+
+    private BigDecimal calculateLineTotal(CartItem cartItem) {
+        return cartItem.getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity()));
     }
 
     public void addToCart(String customerId, String productId) {

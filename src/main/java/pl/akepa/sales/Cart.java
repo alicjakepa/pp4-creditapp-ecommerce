@@ -1,13 +1,13 @@
 package pl.akepa.sales;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Cart {
-    List<CartItem> items;
+    Map<String, CartItem> items;
 
     public Cart() {
-        this.items = new ArrayList<>();
+        this.items = new HashMap<>();
     }
 
     public static Cart empty() {
@@ -19,6 +19,27 @@ public class Cart {
     }
 
     public void addItem(CartItem item) {
-        items.add(item);
+        if (!isItemAlreadyExists(item)) {
+            doAddToCart(item);
+        } else {
+            increaseQuantity(item);
+        }
+    }
+
+    private void increaseQuantity(CartItem item) {
+        items.get(item.getProductId())
+                .increaseQuantity();
+    }
+
+    private void doAddToCart(CartItem item) {
+        items.put(item.getProductId(), item);
+    }
+
+    private boolean isItemAlreadyExists(CartItem item) {
+        return items.get(item.getProductId()) != null;
+    }
+
+    public List<CartItem> getItems() {
+        return new ArrayList<>(items.values());
     }
 }
