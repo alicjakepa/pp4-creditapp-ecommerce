@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ProductCatalog {
     Map<String, ProductData> products;
@@ -33,10 +34,14 @@ public class ProductCatalog {
         if (loaded.getImage() == null) {
             throw new CantPublishProductException();
         }
+        loaded.setOnline(true);
     }
 
     public List<ProductData> allPublishedProducts() {
-        return Collections.emptyList();
+        return products.values()
+                .stream()
+                .filter(productData -> productData.isOnline())
+                .collect(Collectors.toList());
     }
 
     public void assignPrice(String productId, BigDecimal newPrice) {
@@ -48,7 +53,8 @@ public class ProductCatalog {
         return loadProductById(productId);
     }
 
-    public void assignImage(String productId, String s) {
-
+    public void assignImage(String productId, String newImage) {
+        ProductData loaded = loadProductById(productId);
+        loaded.assignImage(newImage);
     }
 }

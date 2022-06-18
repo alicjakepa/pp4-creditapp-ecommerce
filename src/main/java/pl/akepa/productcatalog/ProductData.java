@@ -3,12 +3,14 @@ package pl.akepa.productcatalog;
 import java.math.BigDecimal;
 
 public class ProductData {
-    private final String productId;
+    private final String id;
     private final String name;
     private BigDecimal newPrice;
+    private String image;
+    private boolean online;
 
     public ProductData(String productId, String name) {
-        this.productId = productId;
+        this.id = productId;
         this.name = name;
     }
 
@@ -21,6 +23,28 @@ public class ProductData {
     }
 
     public String getImage() {
-        return null;
+        return image;
+    }
+
+    public void assignImage(String newImage) {
+
+        this.image = newImage;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setOnline(boolean online) {
+
+        this.online = online;
+    }
+
+    public boolean isOnline() {
+        return online;
     }
 }
