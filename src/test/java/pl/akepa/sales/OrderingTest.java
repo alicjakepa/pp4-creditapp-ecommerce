@@ -7,8 +7,7 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderingTest {
 
@@ -35,6 +34,24 @@ public class OrderingTest {
         //paymentUrl
 
         assertNotNull(payment.getUrl());
+    }
+
+    @Test
+    void dennayPurchaseWhenOfferDifferentThenSeenOffer() {
+        String productId = thereIsExampleProduct();
+        Sales sales = thereIsSalesModule();
+        String customerId = thereIsCustomer();
+        sales.addToCart(customerId, productId);
+        Offer seenOffer = sales.getCurrentOffer(customerId);
+        Offer newOffer = Offer.of(BigDecimal.valueOf(1000), 1);
+        //when
+
+        assertThrows(OfferNotMatchedException.class, () -> {
+            sales.acceptOffer(
+                    customerId,
+                    newOffer,
+                    getExampleClientData());
+        });
     }
 
     private String thereIsExampleProduct() {
